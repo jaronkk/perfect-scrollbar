@@ -97,7 +97,7 @@ function bindMouseWheelHandler(element, i) {
     }
 
     shouldPrevent = false;
-    if (i.settings.useBothWheelAxes) {
+    if (!i.settings.useBothWheelAxes) {
       // deltaX will only be used for horizontal scrolling and deltaY will
       // only be used for vertical scrolling - this is the default
       element.scrollTop = element.scrollTop - (deltaY * i.settings.wheelSpeed);
@@ -107,16 +107,16 @@ function bindMouseWheelHandler(element, i) {
       // active, so let's scroll vertical bar using both mouse wheel axes
       if (Math.abs(deltaY) > Math.abs(deltaX)) {
         element.scrollTop = element.scrollTop - (deltaY * i.settings.wheelSpeed);
-      } else if (Math.abs(deltaY) < Math.abs(deltaX)) {
+      } else {
         element.scrollTop = element.scrollTop + (deltaX * i.settings.wheelSpeed);
       }
       shouldPrevent = true;
     } else if (i.scrollbarXActive && !i.scrollbarYActive) {
       // useBothWheelAxes and only horizontal bar is active, so use both
       // wheel axes for horizontal bar
-      if (Math.abs(deltaY) < Math.abs(deltaX)) {
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
         element.scrollLeft = element.scrollLeft + (deltaX * i.settings.wheelSpeed);
-      } else if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      } else {
         element.scrollLeft = element.scrollLeft - (deltaY * i.settings.wheelSpeed);
       }
       shouldPrevent = true;
